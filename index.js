@@ -14,7 +14,8 @@ const app = express()
  //})
 
 
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms - :bodyp'))
+//app.use(morgan(':method :url :status :res[content-length] - :response-time ms - :bodyp'))
+
 app.use(cors())
 app.use(express.json())
 
