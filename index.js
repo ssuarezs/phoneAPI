@@ -5,7 +5,13 @@ const morgan = require('morgan')
 
 const app = express()
 
-morgan.token('bodyp', function (req, res) { return req.body })
+morgan.token('bodyp', function (req, res) { 
+  const body = req.body
+  if (body) {
+    const {name, number} = body 
+    return `{name: ${name}, number: ${number}}`
+  }
+})
 
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms - :bodyp'))
@@ -21,12 +27,12 @@ let persons = [
   {
     "name": "Dan Abramov",
     "number": "12-43-234345",
-    "id": 3
+    "id": 2
   },
   {
     "name": "Mary Poppendieck",
     "number": "39-23-6423122",
-    "id": 4
+    "id": 3
   }
 ]
 
@@ -93,6 +99,6 @@ app.post('/api/persons', (req, res) => {
 
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
