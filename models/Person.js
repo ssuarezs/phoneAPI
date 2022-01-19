@@ -6,7 +6,7 @@ const personSchema = new Schema({
 		minlength: 3,
 		required: true
 	},
-  number: {
+	number: {
 		type: String,
 		minlength: 8,
 		required: true

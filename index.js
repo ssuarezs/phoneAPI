@@ -16,23 +16,23 @@ app.use(express.static('public'))
 
 
 app.get('/', (req, res) => {
-  res.send('<h1>Welcome to Phone API</h1>')
+	res.send('<h1>Welcome to Phone API</h1>')
 })
 
 app.get('/info', (req, res) => {
-  const today = new Date()
-  Person.find({}).then(pers => {
-    res.send(`
+	const today = new Date()
+	Person.find({}).then(pers => {
+		res.send(`
       <h3>Phonebook has info of ${pers.length} people</h3>
       <h3>${today}</h3>
     `)
-  })
+	})
 })
 
 app.get('/api/persons', (req, res) => {
-  Person.find({}).then(pers => {
-    res.json(pers)
-  })
+	Person.find({}).then(pers => {
+		res.json(pers)
+	})
 })
 
 app.get('/api/persons/:id', (req, res, next) => {
@@ -55,7 +55,7 @@ app.delete('/api/persons/:id', (req, res, next) => {
 })
 
 app.post('/api/persons', (req, res, next) => {
-  const person = req.body
+	const person = req.body
 
 	if(!person || !person.name || !person.number){
 		return res.status(400).json({
@@ -63,29 +63,29 @@ app.post('/api/persons', (req, res, next) => {
 		})
 	}
 
-  const newPerson = new Person({
-    name: person.name,
-    number: Number(person.number)
-  })
+	const newPerson = new Person({
+		name: person.name,
+		number: Number(person.number)
+	})
 
-  newPerson.save()
-    .then(savedPerson => savedPerson.toJSON())
-    .then(savedAndFormattedPerson => res.json(savedAndFormattedPerson))
+	newPerson.save()
+		.then(savedPerson => savedPerson.toJSON())
+		.then(savedAndFormattedPerson => res.json(savedAndFormattedPerson))
 		.catch(err => next(err))
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
 	const { id } = req.params
-  const person = req.body
+	const person = req.body
 
-  const newPersonInfo = {
-    name: person.name,
-    number: Number(person.number)
-  }
+	const newPersonInfo = {
+		name: person.name,
+		number: Number(person.number)
+	}
 
 	Person.findByIdAndUpdate(id, newPersonInfo, {new: true})
 		.then(result => res.json(result))
-    .catch(err => next(err))
+		.catch(err => next(err))
 })
 
 app.use(notFound)
